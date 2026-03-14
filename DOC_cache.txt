@@ -1,0 +1,219 @@
+﻿========== BMMS TEST ==========
+1 : test agent_ptr
+2 : test static volume
+3 : test static volume ptr
+4 : test static volume part
+5 : test free volume
+6 : test free volume ptr
+7 : test free part
+========== BFS TEST ==========
+8 : test bin file
+9 : test file control
+10 : test file_agent_ptr
+Enter a number to choose a test: 9
+
+test file control
+
+============================== DIR_CONTROL MOD TEST BEGIN ==============================
+err_count = 0
+
+[1] add_dir test :
+[1.1] normal cases test :
+[1.1] original statement test :
+            create new directory
+        [PASS]
+
+            recursive create directories
+        [PASS]
+
+            create existing directory (idempotent)
+        [PASS]
+
+            create current directory
+        [PASS]
+
+[1.2] coding errors test :
+[1.2] original statement test :
+        converse test [0]:
+            empty path
+MODC:2 MESC:227 coding_error_dir_control_try_create_dir_with_empty_path
+        [PASS]
+        converse test [1]:
+            path with only spaces
+MODC:2 MESC:227 coding_error_dir_control_try_create_dir_with_empty_path
+        [PASS]
+[1.3] service errors test :
+[1.3] original statement test :
+        converse test [0]:
+            path exists but is not directory
+MODC:2 MESC:242 service_error_dir_control_path_exists_but_not_dir
+        [PASS]
+
+[2] del test :
+[2.1] normal cases test :
+[2.1] original statement test :
+            delete file
+        [PASS]
+
+            delete empty directory
+        [PASS]
+
+            recursive delete non-empty directory
+        [PASS]
+
+            delete non-existent path (idempotent)
+        [PASS]
+
+[2.2] coding errors test :
+[2.2] original statement test :
+        converse test [0]:
+            empty path
+MODC:2 MESC:227 coding_error_dir_control_try_create_dir_with_empty_path
+        [PASS]
+[2.3] service errors test :
+[2.3] original statement test :
+        converse test [0]:
+            cannot delete root directory
+MODC:2 MESC:252 service_error_dir_control_cannot_delete_root
+        [PASS]
+
+[3] list operations test :
+[3.1] get_dir_list test :
+[3.1] original statement test :
+            list subdirectories only
+        [PASS]
+
+            list empty directory
+        [PASS]
+
+[3.2] get_list_file test :
+[3.2] original statement test :
+            list files only
+        [PASS]
+
+[3.3] service errors for list operations test :
+[3.3] original statement test :
+        converse test [0]:
+            directory does not exist
+MODC:2 MESC:240 service_error_dir_control_path_not_exist
+        [PASS]
+        converse test [1]:
+            path is not a directory
+MODC:2 MESC:241 service_error_dir_control_path_is_not_dir
+        [PASS]
+[3.4] coding errors for list operations test :
+[3.4] original statement test :
+        converse test [0]:
+            empty path for get_dir_list
+MODC:2 MESC:227 coding_error_dir_control_try_create_dir_with_empty_path
+        [PASS]
+        converse test [1]:
+            empty path for get_list_file
+MODC:2 MESC:227 coding_error_dir_control_try_create_dir_with_empty_path
+        [PASS]
+
+[4] path query functions test :
+[4.1] get_path_is_excited test :
+[4.1] original statement test :
+            existing directory
+        [PASS]
+
+            existing file
+        [PASS]
+
+            non-existent path
+        [PASS]
+
+        converse test [0]:
+            empty path
+MODC:2 MESC:227 coding_error_dir_control_try_create_dir_with_empty_path
+        [PASS]
+[4.2] get_is_dir / get_is_file test :
+[4.2] original statement test :
+            is_dir on directory
+        [PASS]
+
+            is_dir on file returns false
+        [PASS]
+
+            is_file on file
+        [PASS]
+
+            is_file on directory returns false
+        [PASS]
+
+            non-existent path returns false
+        [PASS]
+
+[4.3] get_accessible test :
+[4.3] original statement test :
+            accessible path
+        [PASS]
+
+            non-existent path not accessible
+        [PASS]
+
+
+[5] rename_file test :
+[5.1] normal cases test :
+[5.1] original statement test :
+            rename file without overwrite
+        [ERR][1] positive test failed
+
+[5.2] service errors test :
+[5.2] original statement test :
+        converse test [0]:
+            source file does not exist
+MODC:2 MESC:263 service_error_dir_control_source_not_exist
+        [PASS]
+        converse test [1]:
+            target exists and overwrite=false
+MODC:2 MESC:264 service_error_dir_control_target_already_exists
+        [PASS]
+        converse test [2]:
+            source and target are same file
+MODC:2 MESC:262 service_error_dir_control_rename_same_file
+        [PASS]
+[5.3] coding errors test :
+[5.3] original statement test :
+        converse test [0]:
+            empty old path
+MODC:2 MESC:235 coding_error_dir_control_rename_empty_path
+        [PASS]
+        converse test [1]:
+            empty new path
+MODC:2 MESC:235 coding_error_dir_control_rename_empty_path
+        [PASS]
+
+[6] integrated scenarios test :
+[6.1] full directory lifecycle test :
+[6.1] original statement test :
+            full lifecycle completed
+        [PASS]
+
+[6.2] batch operations test :
+[6.2] original statement test :
+            batch operations successful
+        [PASS]
+
+
+
+[SUMMARY]
+[ALL TEST COUNT] 39
+[PASS TEST COUNT] 38
+[ERR TEST COUNT] 1
+============================== DIR_CONTROL MOD TEST END ==============================
+
+========== BMMS TEST ==========
+1 : test agent_ptr
+2 : test static volume
+3 : test static volume ptr
+4 : test static volume part
+5 : test free volume
+6 : test free volume ptr
+7 : test free part
+========== BFS TEST ==========
+8 : test bin file
+9 : test file control
+10 : test file_agent_ptr
+Enter a number to choose a test: ^A

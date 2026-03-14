@@ -1,0 +1,94 @@
+﻿<mes>
+	<info>
+		mode_name  = LFMMS
+		mode_macro = MOD_CODE_LFMMS
+		namespace  = lfmms_m
+	</info>
+	<sug>
+		null
+	</sug>
+	<war>
+		null
+	</war>
+	<err>
+		<!-- 运算错误 -->
+		coding_err_lfmms_add_overflow
+		coding_err_lfmms_sub_overflow
+		coding_err_lfmms_mul_overflow
+		coding_err_lfmms_div_by_zero
+		coding_err_lfmms_mod_by_zero
+
+		<!-- 逻辑卷错误 -->
+
+		<!-- 逻辑卷校验错误 -->
+		sys_err_logical_volume_check_this_ptr_null
+
+		coding_err_logical_volume_check_init_type_invalid
+		coding_err_logical_volume_check_use_control_invalid
+		coding_err_logical_volume_check_physical_block_size_zero
+		coding_err_logical_volume_check_logical_block_size_zero
+		coding_err_logical_volume_check_block_size_mismatch
+		coding_err_logical_volume_check_logical_block_alignment_type_invalid
+		coding_err_logical_volume_check_logical_block_alignment_control_invalid
+		coding_err_logical_volume_check_block_count_max_zero
+		coding_err_logical_volume_check_block_count_max_exceed
+		coding_err_logical_volume_check_file_control_invalid
+		coding_err_logical_volume_check_load_control_invalid
+		coding_err_logical_volume_check_cache_control_invalid
+		coding_err_logical_volume_check_memory_cache_control_invalid
+		coding_err_logical_volume_check_stack_accelerate_invalid
+		coding_err_logical_volume_check_permission_invalid
+		coding_err_logical_volume_check_stack_accelerate_size_zero
+		coding_err_logical_volume_check_cache_count_max_zero
+		coding_err_logical_volume_check_cache_count_mismatch
+		coding_err_logical_volume_check_encryption_mismatch
+		coding_err_logical_volume_check_not_initialized
+		coding_err_logical_volume_stack_control_invalid_index
+		coding_err_logical_volume_head_control_pair_not_zero
+
+		coding_err_logical_volume_stack_control_invalid_value_pass
+		coding_err_logical_volume_stack_control_use_after_free
+
+		sys_err_logical_volume_head_control_this_ptr_null
+		sys_err_logical_volume_head_control_bin_file_ptr_null
+
+		service_err_logical_volume_head_control_memory_alloc_failed
+		service_err_logical_volume_head_control_bad_get
+
+		service_err_logical_volume_head_control_bad_set
+
+		service_err_logical_volume_head_control_fix_failed
+		service_err_logical_volume_head_control_fix_failed_zero_and_one_coune_is_equal
+		service_err_logical_volume_head_control_init_pair_failed
+
+		service_err_logical_volume_stack_control_bad_get
+
+		service_err_logical_volume_stack_control_bad_set
+		service_err_logical_volume_stack_control_bad_data
+		service_err_logical_volume_stack_control_fix_tie
+		service_err_logical_volume_stack_control_pair_zero_use_fix_4bit
+		service_err_logical_volume_stack_control_pair_nonzero_use_fix_pair
+		service_err_logical_volume_stack_control_inconsistent
+		service_err_logical_volume_stack_control_decode_tie
+		service_err_logical_volume_stack_control_cas_failed
+		service_err_logical_volume_stack_control_empty
+
+
+		sys_err_logical_volume_stack_control_block_not_free_but_stack_ptr_point_it
+		<!-- 缓存代理指针错误 -->
+
+		coding_error_cache_agent_ptr_make_type_over_range
+		coding_error_cache_agent_ptr_make_type_again
+
+		<!-- 缓存RAII锁错误 -->
+		coding_error_cache_RAII_lock_build_from_null_ptr
+		coding_error_cache_RAII_lock_build_from_not_init_handle
+
+
+		
+
+
+
+
+	</err>
+</mes>

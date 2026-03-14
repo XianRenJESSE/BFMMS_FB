@@ -1,0 +1,485 @@
+﻿<!-- BFS_mes.xml -->
+<mes>
+	<info>
+		mode_name = BFS
+		mode_macro = MOD_CODE_BFS
+		namespace = bfs_m
+	</info>
+	<sug>
+		null
+	</sug>
+	<war>
+		null
+	</war>
+	<err>
+
+		<!-- ============================ 构造函数错误 ============================ -->
+		bin_file_ctor_err_begin
+
+		<!-- 构造参数错误 -->
+		bin_file_ctor_coding_errors_begin
+		coding_error_bin_file_try_build_from_empty_path
+		coding_error_bin_file_unfair_init_type_value
+		bin_file_ctor_coding_errors_end
+
+		<!-- 构造时文件系统错误 -->
+		bin_file_ctor_filesystem_errors_begin
+		service_error_bin_file_file_not_existed_when_build_with_choice_of_open_existed
+		service_error_bin_file_file_can_not_open_when_build_with_choice_of_open_existed
+		service_error_bin_file_file_already_existed_when_build_with_choice_of_create
+		service_error_bin_file_constructor_cannot_create
+		service_error_bin_file_unknown_error_when_open
+		bin_file_ctor_filesystem_errors_end
+
+		bin_file_ctor_err_end
+
+
+		<!-- ============================ open() 操作错误 ============================ -->
+		bin_file_open_err_begin
+
+		<!-- open参数错误 -->
+		bin_file_open_coding_errors_begin
+		coding_error_bin_file_try_open_empty_path
+		bin_file_open_coding_errors_end
+
+		<!-- open文件系统错误 -->
+		bin_file_open_filesystem_errors_begin
+		service_error_bin_file_file_not_existed_when_open_with_choice_of_open_existed
+		service_error_bin_file_file_can_not_open_when_open_with_choice_of_open_existed
+		service_error_bin_file_file_already_existed_when_open_with_choice_of_create
+		service_error_bin_file_file_can_not_create_when_open_with_choice_of_create
+		service_error_bin_file_constructor_cannot_create_when_open_with_choice_of_cover_and_create
+		bin_file_open_filesystem_errors_end
+
+		bin_file_open_err_end
+
+
+		<!-- ============================ close() 操作错误 ============================ -->
+		bin_file_close_err_begin
+
+		<!-- close状态错误 -->
+		bin_file_close_state_errors_begin
+		service_error_bin_file_not_opened_when_close
+		bin_file_close_state_errors_end
+
+		<!-- close操作错误 -->
+		bin_file_close_operation_errors_begin
+		service_error_bin_file_flush_error_when_close
+		service_error_bin_file_file_close_error
+		service_error_bin_file_file_unknown_error_when_close
+		bin_file_close_operation_errors_end
+
+		bin_file_close_err_end
+
+
+		<!-- ============================ flush() 操作错误 ============================ -->
+		bin_file_flush_err_begin
+
+		<!-- flush状态错误 -->
+		bin_file_flush_state_errors_begin
+		service_error_bin_file_not_opened_when_flush_with_check
+		bin_file_flush_state_errors_end
+
+		<!-- flush操作错误 -->
+		bin_file_flush_operation_errors_begin
+		service_error_bin_file_flush_error_when_flush_with_check
+		bin_file_flush_operation_errors_end
+
+		bin_file_flush_err_end
+
+
+		<!-- ============================ resize() 调整大小错误 ============================ -->
+		bin_file_resize_err_begin
+
+		<!-- resize状态错误 -->
+		bin_file_resize_state_errors_begin
+		service_error_bin_file_file_not_opened_when_resize
+		bin_file_resize_state_errors_end
+
+		<!-- resize获取大小错误 -->
+		bin_file_resize_get_size_errors_begin
+		service_error_bin_file_seek_error_when_resize_get_size
+		service_error_bin_file_unknown_error_when_resize_get_size
+		bin_file_resize_get_size_errors_end
+
+		<!-- resize关闭文件错误 -->
+		bin_file_resize_close_errors_begin
+		service_error_bin_file_file_close_error_before_resize
+		bin_file_resize_close_errors_end
+
+		<!-- resize文件系统错误 -->
+		bin_file_resize_filesystem_errors_begin
+		service_error_bin_file_file_resize_failed
+		bin_file_resize_filesystem_errors_end
+
+		<!-- resize重新打开错误 -->
+		bin_file_resize_reopen_errors_begin
+		service_error_bin_file_file_reopen_error_after_resize
+		bin_file_resize_reopen_errors_end
+
+		<!-- resize填充零错误 -->
+		bin_file_resize_fill_zero_errors_begin
+		service_error_bin_file_file_seek_error_when_fill_zeros
+		service_error_bin_file_file_write_error_when_fill_zeros
+		service_error_bin_file_flush_error_after_resize_fill_zeros
+		service_error_bin_file_file_unknown_error_when_fill_zeros
+		bin_file_resize_fill_zero_errors_end
+
+		<!-- resize验证错误 -->
+		bin_file_resize_verify_errors_begin
+		service_error_bin_file_size_mismatch_after_resize
+		service_error_bin_file_seek_error_to_begin_after_resize
+		service_error_bin_file_unknown_error_when_resize_verify_size
+		bin_file_resize_verify_errors_end
+
+		bin_file_resize_err_end
+
+
+		<!-- ============================ clear() 清空文件错误 ============================ -->
+		bin_file_clear_err_begin
+
+		<!-- clear状态错误 -->
+		bin_file_clear_state_errors_begin
+		service_error_bin_file_file_not_opened_when_clear
+		bin_file_clear_state_errors_end
+
+		<!-- clear获取大小错误 -->
+		bin_file_clear_get_size_errors_begin
+		service_error_bin_file_seek_error_when_clear_get_size
+		service_error_bin_file_unknown_error_when_clear_get_size
+		bin_file_clear_get_size_errors_end
+
+		<!-- clear写入零错误 -->
+		bin_file_clear_write_errors_begin
+		service_error_bin_file_seek_error_when_clear_full
+		service_error_bin_file_write_error_when_clear_full
+		service_error_bin_file_flush_error_after_clear_fill_zeros
+		service_error_bin_file_unknown_error_when_clear_full
+		bin_file_clear_write_errors_end
+
+		<!-- clear验证错误 -->
+		bin_file_clear_verify_errors_begin
+		service_error_bin_file_size_changed_during_clear
+		service_error_bin_file_seek_error_to_begin_after_clear
+		service_error_bin_file_unknown_error_when_clear_verify_size
+		bin_file_clear_verify_errors_end
+
+		bin_file_clear_err_end
+
+
+		<!-- ============================ clear_range() 范围清空错误 ============================ -->
+		bin_file_clear_range_err_begin
+
+		<!-- clear_range状态错误 -->
+		bin_file_clear_range_state_errors_begin
+		service_error_bin_file_file_not_opened_when_clear_range
+		bin_file_clear_range_state_errors_end
+
+		<!-- clear_range参数错误 -->
+		bin_file_clear_range_coding_errors_begin
+		coding_error_bin_file_op_range_overflow
+		coding_error_bin_file_op_range_out_of_file
+		bin_file_clear_range_coding_errors_end
+
+		<!-- clear_range操作错误 -->
+		bin_file_clear_range_operation_errors_begin
+		service_error_bin_file_seek_error_when_clear_range
+		service_error_bin_file_write_error_when_clear_range
+		service_error_bin_file_unknown_error_when_clear_range
+		bin_file_clear_range_operation_errors_end
+
+		bin_file_clear_range_err_end
+
+
+		<!-- ============================ save_as() 另存为错误 ============================ -->
+		bin_file_save_as_err_begin
+
+		<!-- save_as参数错误 -->
+		bin_file_save_as_coding_errors_begin
+		coding_error_bin_file_save_as_to_empty_path
+		coding_error_bin_file_save_as_to_self
+		bin_file_save_as_coding_errors_end
+
+		<!-- save_as状态错误 -->
+		bin_file_save_as_state_errors_begin
+		service_error_bin_file_file_not_opened_when_save_as
+		bin_file_save_as_state_errors_end
+
+		<!-- save_as获取大小错误 -->
+		bin_file_save_as_get_size_errors_begin
+		service_error_bin_file_seek_error_when_save_as_get_size
+		service_error_bin_file_unknown_error_when_save_as_get_size
+		bin_file_save_as_get_size_errors_end
+
+		<!-- save_as复制数据错误 -->
+		bin_file_save_as_copy_errors_begin
+		service_error_bin_file_read_error_when_save_as
+		service_error_bin_file_write_error_when_save_as
+		service_error_bin_file_flush_error_after_save_as
+		service_error_bin_file_unknown_error_when_save_as
+		bin_file_save_as_copy_errors_end
+
+		<!-- save_as验证错误 -->
+		bin_file_save_as_verify_errors_begin
+		service_error_bin_file_size_mismatch_after_save_as
+		service_error_bin_file_unknown_error_when_save_as_verify_size
+		service_error_bin_file_seek_error_to_begin_after_save_as
+		bin_file_save_as_verify_errors_end
+
+		bin_file_save_as_err_end
+
+
+		<!-- ============================ load/store 文件间数据交换错误 ============================ -->
+		bin_file_inter_file_transfer_err_begin
+
+		<!-- load/store状态错误 -->
+		bin_file_transfer_state_errors_begin
+		service_error_bin_file_file_not_opened_when_load
+		service_error_bin_file_other_file_not_opened_when_load
+		bin_file_transfer_state_errors_end
+
+		<!-- load/store参数错误 -->
+		bin_file_transfer_coding_errors_begin
+		coding_error_bin_file_op_size_too_large
+		coding_error_bin_file_theorem_self_op_range_outside_file
+		coding_error_bin_file_theorem_other_op_range_outside_file
+		coding_error_bin_file_op_range_overlap_in_same_file
+		bin_file_transfer_coding_errors_end
+
+		<!-- load/store文件操作错误 -->
+		bin_file_transfer_operation_errors_begin
+		service_error_bin_file_file_seek_error_when_load
+		service_error_bin_file_read_error_when_file_to_file_load
+		service_error_bin_file_write_error_when_file_to_file_load
+		service_error_bin_file_unknown_error_when_file_to_file_load
+		bin_file_transfer_operation_errors_end
+
+		bin_file_inter_file_transfer_err_end
+
+
+		<!-- ============================ 与agent_ptr数据交换错误 ============================ -->
+		bin_file_agent_ptr_transfer_err_begin
+
+		<!-- load_to_agent_ptr/store_from_agent_ptr状态错误 -->
+		bin_file_agent_ptr_state_errors_begin
+		service_error_bin_file_file_not_opened_when_load_to_agent_ptr
+		service_error_bin_file_file_not_opened_when_store_from_agent_ptr
+		bin_file_agent_ptr_state_errors_end
+
+		<!-- load_to_agent_ptr/store_from_agent_ptr参数错误 -->
+		bin_file_agent_ptr_coding_errors_begin
+		coding_error_bin_file_theorem_agent_ptr_is_null
+		coding_error_bin_file_theorem_file_op_range_outside_file
+		bin_file_agent_ptr_coding_errors_end
+
+		<!-- load_to_agent_ptr文件操作错误 -->
+		bin_file_agent_ptr_load_errors_begin
+		service_error_bin_file_file_seek_error_when_load_to_agent_ptr
+		service_error_bin_file_file_read_error_when_load_to_agent_ptr
+		service_error_bin_file_file_unknown_error_when_load_to_agent_ptr
+		bin_file_agent_ptr_load_errors_end
+
+		<!-- store_from_agent_ptr文件操作错误 -->
+		bin_file_agent_ptr_store_errors_begin
+		service_error_bin_file_file_seek_error_when_store_from_agent_ptr
+		service_error_bin_file_file_write_error_when_store_from_agent_ptr
+		service_error_bin_file_file_unknown_error_when_store_from_agent_ptr
+		bin_file_agent_ptr_store_errors_end
+
+		bin_file_agent_ptr_transfer_err_end
+
+
+		<!-- ============================ 与void_ptr数据交换错误 ============================ -->
+		bin_file_void_ptr_transfer_err_begin
+
+		<!-- load_to_void_ptr/store_from_void_ptr状态错误 -->
+		bin_file_void_ptr_state_errors_begin
+		service_error_bin_file_file_not_opened_when_load_to_void_ptr
+		service_error_bin_file_file_not_opened_when_store_from_void_ptr
+		bin_file_void_ptr_state_errors_end
+
+		<!-- load_to_void_ptr文件操作错误 -->
+		bin_file_void_ptr_load_errors_begin
+		service_error_bin_file_file_seek_error_when_load_to_void_ptr
+		service_error_bin_file_file_read_error_when_load_to_void_ptr
+		service_error_bin_file_file_unknown_error_when_load_to_void_ptr
+		bin_file_void_ptr_load_errors_end
+
+		<!-- store_from_void_ptr文件操作错误 -->
+		bin_file_void_ptr_store_errors_begin
+		service_error_bin_file_file_seek_error_when_store_from_void_ptr
+		service_error_bin_file_file_write_error_when_store_from_void_ptr
+		service_error_bin_file_file_unknown_error_when_store_from_void_ptr
+		bin_file_void_ptr_store_errors_end
+
+		bin_file_void_ptr_transfer_err_end
+
+
+		<!-- ============================ 定理检查错误 ============================ -->
+		bin_file_theorem_err_begin
+
+		<!-- 文件间操作定理错误 -->
+		bin_file_theorem_file_to_file_errors_begin
+		coding_error_bin_file_theorem_self_file_not_opened
+		coding_error_bin_file_theorem_self_op_size_zero
+		coding_error_bin_file_theorem_other_op_size_zero
+		coding_error_bin_file_theorem_two_streams_use_same_file
+		coding_error_bin_file_invalid_path_of_your_system
+		coding_error_bin_file_op_range_overlapping
+		bin_file_theorem_file_to_file_errors_end
+
+		<!-- 与agent_ptr操作定理错误 -->
+		bin_file_theorem_agent_ptr_errors_begin
+		coding_error_bin_file_theorem_file_not_opened
+		coding_error_bin_file_theorem_op_size_zero
+		coding_error_bin_file_theorem_agent_ptr_op_range_outside_memory
+		bin_file_theorem_agent_ptr_errors_end
+
+		<!-- 与void_ptr操作定理错误 -->
+		bin_file_theorem_void_ptr_errors_begin
+		coding_error_bin_file_theorem_void_ptr_is_nullptr
+		bin_file_theorem_void_ptr_errors_end
+
+		<!-- 通用定理错误 -->
+		bin_file_theorem_general_errors_begin
+		coding_error_bin_file_op_end_overflow_size_t_max_value
+		coding_error_bin_file_op_size_zero
+		bin_file_theorem_general_errors_end
+
+		bin_file_theorem_err_end
+
+
+		<!-- ============================ 目录控制错误 ============================ -->
+		dir_control_err_begin
+
+		<!-- 目录控制参数错误 -->
+		dir_control_coding_errors_begin
+		coding_error_dir_control_invalid_path_of_your_system
+		coding_error_dir_control_try_create_dir_with_empty_path
+		coding_error_dir_control_try_delete_empty_path
+		coding_error_dir_control_try_list_dir_with_empty_path
+		coding_error_dir_control_try_list_file_with_empty_path
+		coding_error_dir_control_try_check_existence_with_empty_path
+		coding_error_dir_control_try_check_is_dir_with_empty_path
+		coding_error_dir_control_try_check_is_file_with_empty_path
+		coding_error_dir_control_try_check_accessible_with_empty_path
+		coding_error_dir_control_rename_empty_path
+		dir_control_coding_errors_end
+
+		<!-- 目录控制文件系统错误 -->
+		dir_control_filesystem_errors_begin
+		service_error_dir_control_path_is_empty
+		service_error_dir_control_invalid_path
+		service_error_dir_control_path_not_exist
+		service_error_dir_control_path_is_not_dir
+		service_error_dir_control_path_exists_but_not_dir
+		service_error_dir_control_parent_not_exist
+		service_error_dir_control_no_read_permission
+		service_error_dir_control_no_write_permission
+		service_error_dir_control_permission_denied
+		service_error_dir_control_access_denied
+		service_error_dir_control_access_failed
+		service_error_dir_control_name_too_long
+		service_error_dir_control_no_space
+		service_error_dir_control_resource_busy
+		service_error_dir_control_cannot_delete_root
+		service_error_dir_control_check_existence_failed
+		service_error_dir_control_check_type_failed
+		service_error_dir_control_created_but_no_read_permission
+		service_error_dir_control_create_failed
+		service_error_service_error_dir_control_create_failed_but_no_error
+		service_error_dir_control_delete_failed
+		service_error_dir_control_delete_failed_but_no_error
+		service_error_dir_control_list_failed
+		service_error_dir_control_unknown_error
+		service_error_dir_control_rename_same_file
+		service_error_dir_control_source_not_exist
+		service_error_dir_control_target_already_exists
+		service_error_dir_control_target_not_regular
+		service_error_dir_control_cross_device
+		service_error_dir_control_rename_failed
+		service_error_dir_control_rename_verification_failed
+		dir_control_cannot_create_temp
+		service_error_dir_control_check_source_failed
+		service_error_dir_control_check_target_failed
+		dir_control_filesystem_errors_end
+
+		dir_control_err_end
+
+
+		<!-- ============================ 文件代理指针错误 ============================ -->
+		file_agent_ptr_err_begin
+
+		<!-- 构造函数错误 -->
+		file_agent_ptr_ctor_errors_begin
+		coding_error_file_agent_ptr_bin_file_shared_ptr_is_nullptr_when_construct
+		service_error_file_agent_ptr_file_not_opened_when_construct
+		service_error_file_agent_ptr_file_range_outside_file_when_construct
+		coding_error_file_agent_ptr_zero_size_when_construct
+		service_error_file_agent_ptr_cache_agent_ptr_is_null_when_construct
+		service_error_file_agent_ptr_cache_agent_ptr_size_too_small_when_construct
+		service_error_file_agent_ptr_memory_allocation_failed_when_construct
+		service_error_file_agent_ptr_unknown_error_when_construct
+		file_agent_ptr_ctor_errors_end
+
+		<!-- 操作错误（编码错误与逻辑错误） -->
+		file_agent_ptr_operation_errors_begin
+
+		coding_error_file_agent_ptr_not_inited_when_checking
+		coding_error_file_agent_ptr_cache_agent_ptr_is_null_when_checking
+
+		coding_error_file_agent_ptr_cache_agent_ptr_is_null_when_push
+		service_error_file_agent_ptr_cache_agent_ptr_is_null_when_pull
+
+		coding_error_file_agent_ptr_cache_agent_ptr_size_zero_when_pull
+		coding_error_file_agent_ptr_cache_agent_ptr_size_zero_when_checking
+		service_error_file_agent_ptr_file_not_opened_when_get_managed_size
+		service_error_file_agent_ptr_file_not_opened_when_check_validity
+		service_error_file_agent_ptr_file_not_opened_when_check_file_range
+		coding_error_file_agent_ptr_file_range_outside_file_when_operate
+		coding_error_file_agent_ptr_cache_range_outside_memory_when_operate
+		coding_error_file_agent_ptr_other_agent_ptr_is_null_when_load_or_store
+		coding_error_file_agent_ptr_other_agent_ptr_range_outside_memory_when_load_or_store
+		coding_error_file_agent_ptr_op_range_overlap_when_load_or_store
+		coding_error_file_agent_ptr_zero_op_size_when_load_or_store
+		coding_error_file_agent_ptr_zero_op_size_when_checking
+		coding_error_file_agent_ptr_op_range_overflow_when_pull
+		coding_error_file_agent_ptr_op_range_overflow_when_clear_range
+		coding_error_file_agent_ptr_op_range_overflow_when_load_or_store
+		coding_error_file_agent_ptr_void_ptr_is_nullptr_when_load_or_store
+		file_agent_ptr_operation_errors_end
+
+		<!-- 信息获取错误 -->
+		file_agent_ptr_info_errors_begin
+		service_error_file_agent_ptr_file_modified_externally
+		service_error_file_agent_ptr_file_unknown_error_when_pull
+		service_error_file_agent_ptr_file_unknown_error_when_check_validity
+		file_agent_ptr_info_errors_end
+
+		<!-- push/pull 错误 -->
+		file_agent_ptr_push_pull_errors_begin
+		service_error_file_agent_ptr_file_not_opened_when_push
+		service_error_file_agent_ptr_file_not_opened_when_pull
+		service_error_file_agent_ptr_not_inited_when_push
+		service_error_file_agent_ptr_not_inited_when_pull
+		service_error_file_agent_ptr_file_range_outside_file_when_push
+		service_error_file_agent_ptr_file_range_outside_file_when_pull
+		disk_full_when_push
+		file_deleted_externally
+		service_error_file_agent_ptr_memory_allocation_failed_when_pull
+		service_error_file_agent_ptr_file_io_error_when_pull
+		service_error_file_agent_ptr_unknown_error_when_push
+		service_error_file_agent_ptr_unknown_error_when_pull
+		file_agent_ptr_push_pull_errors_end
+
+		<!-- 其他错误 -->
+		file_agent_ptr_other_errors_begin
+		file_access_denied
+		service_error_file_agent_ptr_unknown_error_when_clear
+		service_error_file_agent_ptr_unknown_error_when_clear_range
+		file_agent_ptr_other_errors_end
+
+		file_agent_ptr_err_end
+
+	</err>
+</mes>

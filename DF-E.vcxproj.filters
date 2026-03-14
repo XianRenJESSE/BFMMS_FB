@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="bin">
+      <UniqueIdentifier>{b426a9e9-8dbb-46a2-8c19-88616324c729}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib">
+      <UniqueIdentifier>{bc30ef7a-9eda-4f86-83bd-8140bc16e344}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bin\core">
+      <UniqueIdentifier>{53b53332-9cf1-4ec8-9058-30d7b5f223df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod">
+      <UniqueIdentifier>{2c0bb5b1-f70d-4269-991d-21d722311dfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\init">
+      <UniqueIdentifier>{29dc6298-7d5b-4f18-b847-1a5742a8ff82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod\base">
+      <UniqueIdentifier>{322bdb7e-2677-4da0-84c0-c7add93876a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\doc">
+      <UniqueIdentifier>{16dc8f85-0472-4f8d-9a2e-12a4feba0dd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\coding_tool">
+      <UniqueIdentifier>{a11a1c14-1e96-4d0a-845d-6f22ec319741}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod\base\MES">
+      <UniqueIdentifier>{4b7aae35-d8c0-4ab9-9abc-2b136f822a8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod\base\BMMS">
+      <UniqueIdentifier>{97c25746-5f4a-45c7-b75e-2b7bbae0e039}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod\base\BMMS\static_volume">
+      <UniqueIdentifier>{c0edd8f5-113a-4389-b2c4-a0530535e5d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod\base\BMMS\api">
+      <UniqueIdentifier>{f3fecb5d-4836-4a10-a77d-3fb4500ffbdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod\base\BMMS\dp">
+      <UniqueIdentifier>{28b34275-cd0f-4fc4-81fb-0199e436a058}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod\base\BMMS\static_volume_ptr">
+      <UniqueIdentifier>{c0359ace-67ec-47c3-9183-8102abd53d4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod\base\BMMS\static_volume_part">
+      <UniqueIdentifier>{98c1d8b8-874b-4ae3-b24b-da1191dd8f3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod\base\BMMS\free_part">
+      <UniqueIdentifier>{dd50ca44-9e02-4800-a933-a7db41b97118}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod\base\BMMS\agent_ptr">
+      <UniqueIdentifier>{83ee933e-f811-46ea-98e5-0c9c0dc1733b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod\base\MATH">
+      <UniqueIdentifier>{9edd7354-8887-4643-ae8e-68ae00cab30d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod\base\SIMPLE_TYPE_NAME">
+      <UniqueIdentifier>{d7c9922f-e825-4ec2-9f88-d89ce802f18d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod\base\BFS">
+      <UniqueIdentifier>{4f78736c-a212-4da9-a928-dbfc7696b098}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod\base\BFS\file_agent_ptr">
+      <UniqueIdentifier>{10082457-728d-46c5-9fb4-6862ccc85c74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod\base\BFS\bin_file">
+      <UniqueIdentifier>{9afef0a0-74de-4a7e-8d94-440f2dab96b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod\base\BFS\api">
+      <UniqueIdentifier>{2abef9d7-efed-4dbd-83bd-b1f7e946dbb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod\base\BFS\dp">
+      <UniqueIdentifier>{4b43566a-0ba2-4681-b189-96b893ef329c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod\base\BFS\file_control">
+      <UniqueIdentifier>{1e0859ad-0181-4991-82d0-c8fea5d180ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod\base\BMMS\free_volume">
+      <UniqueIdentifier>{4473e197-7412-45e2-9df3-91a1b4a41303}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod\base\BMMS\free_volume_ptr">
+      <UniqueIdentifier>{908de500-4369-48f4-84e2-1373706feb44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lib\mod\base\TEST">
+      <UniqueIdentifier>{ceea4604-d474-4e11-8e9a-fabc4bf9096f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="INIT.h">
+      <Filter>lib\init</Filter>
+    </ClInclude>
+    <ClInclude Include="SIMPLE_TYPE_NAME.h">
+      <Filter>lib\mod\base\SIMPLE_TYPE_NAME</Filter>
+    </ClInclude>
+    <ClInclude Include="MES_dp.h">
+      <Filter>lib\mod\base\MES</Filter>
+    </ClInclude>
+    <ClInclude Include="BMMS_dp.h">
+      <Filter>lib\mod\base\BMMS\dp</Filter>
+    </ClInclude>
+    <ClInclude Include="BMMS_mes.h">
+      <Filter>lib\mod\base\BMMS\dp</Filter>
+    </ClInclude>
+    <ClInclude Include="BFS_dp.h">
+      <Filter>lib\mod\base\BFS\dp</Filter>
+    </ClInclude>
+    <ClInclude Include="BFS_mes.h">
+      <Filter>lib\mod\base\BFS\dp</Filter>
+    </ClInclude>
+    <ClInclude Include="TEST_helper.h">
+      <Filter>lib\mod\base\TEST</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MES.ixx">
+      <Filter>lib\mod\base\MES</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>bin\core</Filter>
+    </ClCompile>
+    <ClCompile Include="BFS_file_agent_ptr.cpp">
+      <Filter>lib\mod\base\BFS\file_agent_ptr</Filter>
+    </ClCompile>
+    <ClCompile Include="BFS_file_agent_ptr_test.cpp">
+      <Filter>lib\mod\base\BFS\file_agent_ptr</Filter>
+    </ClCompile>
+    <ClCompile Include="BMMS_static_volume.cpp">
+      <Filter>lib\mod\base\BMMS\static_volume</Filter>
+    </ClCompile>
+    <ClCompile Include="BMMS_static_volume_test.cpp">
+      <Filter>lib\mod\base\BMMS\static_volume</Filter>
+    </ClCompile>
+    <ClCompile Include="BMMS.ixx">
+      <Filter>lib\mod\base\BMMS\api</Filter>
+    </ClCompile>
+    <ClCompile Include="BMMS_static_volume_ptr.cpp">
+      <Filter>lib\mod\base\BMMS\static_volume_ptr</Filter>
+    </ClCompile>
+    <ClCompile Include="BMMS_static_volume_part.cpp">
+      <Filter>lib\mod\base\BMMS\static_volume_part</Filter>
+    </ClCompile>
+    <ClCompile Include="BMMS_free_part.cpp">
+      <Filter>lib\mod\base\BMMS\free_part</Filter>
+    </ClCompile>
+    <ClCompile Include="BMMS_agent_ptr.cpp">
+      <Filter>lib\mod\base\BMMS\agent_ptr</Filter>
+    </ClCompile>
+    <ClCompile Include="BMMS_agent_ptr_test.cpp">
+      <Filter>lib\mod\base\BMMS\agent_ptr</Filter>
+    </ClCompile>
+    <ClCompile Include="BFS_bin_file.cpp">
+      <Filter>lib\mod\base\BFS\bin_file</Filter>
+    </ClCompile>
+    <ClCompile Include="BFS_bin_file_test.cpp">
+      <Filter>lib\mod\base\BFS\bin_file</Filter>
+    </ClCompile>
+    <ClCompile Include="BFS.ixx">
+      <Filter>lib\mod\base\BFS\api</Filter>
+    </ClCompile>
+    <ClCompile Include="BFS_file_control.cpp">
+      <Filter>lib\mod\base\BFS\file_control</Filter>
+    </ClCompile>
+    <ClCompile Include="BFS_file_control_test.cpp">
+      <Filter>lib\mod\base\BFS\file_control</Filter>
+    </ClCompile>
+    <ClCompile Include="BMMS_free_volume.cpp">
+      <Filter>lib\mod\base\BMMS\free_volume</Filter>
+    </ClCompile>
+    <ClCompile Include="BMMS_free_volume_ptr.cpp">
+      <Filter>lib\mod\base\BMMS\free_volume_ptr</Filter>
+    </ClCompile>
+    <ClCompile Include="TEST_helper.cpp">
+      <Filter>lib\mod\base\TEST</Filter>
+    </ClCompile>
+    <ClCompile Include="BMMS_free_volume_test.cpp">
+      <Filter>lib\mod\base\BMMS\free_volume</Filter>
+    </ClCompile>
+    <ClCompile Include="BMMS_free_part_test.cpp">
+      <Filter>lib\mod\base\BMMS\free_part</Filter>
+    </ClCompile>
+    <ClCompile Include="BMMS_static_volume_part_test.cpp">
+      <Filter>lib\mod\base\BMMS\static_volume_part</Filter>
+    </ClCompile>
+    <ClCompile Include="BMMS_free_volume_ptr_test.cpp">
+      <Filter>lib\mod\base\BMMS\free_volume_ptr</Filter>
+    </ClCompile>
+    <ClCompile Include="BMMS_static_volume_ptr_test.cpp">
+      <Filter>lib\mod\base\BMMS\static_volume_ptr</Filter>
+    </ClCompile>
+    <ClCompile Include="BFS_file_control_path_check.cpp">
+      <Filter>lib\mod\base\BFS\file_control</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="BMMS_mes.xml">
+      <Filter>lib\mod\base\BMMS\dp</Filter>
+    </Xml>
+    <Xml Include="BFS_mes.xml">
+      <Filter>lib\mod\base\BFS\dp</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CODING_TOOL_ixx_to_ixx_cpp.py">
+      <Filter>lib\coding_tool</Filter>
+    </None>
+    <None Include="CODING_TOOL_mes.xml_auto_to_mse.h.py">
+      <Filter>lib\coding_tool</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="DOC_useful.txt">
+      <Filter>lib\doc</Filter>
+    </Text>
+    <Text Include="BMMS_agent_ptr_prove.txt">
+      <Filter>lib\mod\base\BMMS\agent_ptr</Filter>
+    </Text>
+    <Text Include="BFS_file_agent_ptr_prove.txt">
+      <Filter>lib\mod\base\BFS\file_agent_ptr</Filter>
+    </Text>
+    <Text Include="DOC_cache.txt">
+      <Filter>lib\doc</Filter>
+    </Text>
+    <Text Include="BMMS_static_volume_prove.txt">
+      <Filter>lib\mod\base\BMMS\static_volume</Filter>
+    </Text>
+    <Text Include="BFS_bin_file_prove.txt">
+      <Filter>lib\mod\base\BFS\bin_file</Filter>
+    </Text>
+    <Text Include="DOC_test_rule.txt">
+      <Filter>lib\doc</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,164 @@
+﻿1.每个接口分为正例和反例两种测试   即：正命题 和 反命题
+2.测试数据由实现反推其边界情况
+3.除了无法造成的外部导致错误，其余均要测试
+4.对于只有编码错误的模块，使用catch(mes::a_mes e){ e.out()}即可
+5.测试输出格式：
+'''text
+============================== XXX MOD TEST BEGIN ==============================
+err_count = 0
+
+[i] class_name test : 
+[i.j] xxx_function test :
+[i.j] original statement test :
+
+            test what // one sentence to explain what the test measures
+        [PASS]        // by mes_out.code == 0 and catched nothing then output [PASS]
+
+        converse test [k]: // k = 0 each this place begin inside class test
+            test what
+        // if coding err and successfully triggered
+        MODC: xxx MESC: xxx coding_err_which_class_how_err_and_why  // by catched mes::a_mes mes_out then mes_out.out() then in CMD can see this output
+        [PASS]                                                      // by catched mes::a_mes mes_out then output [PASS]
+        // if coding err and unsuccessfully triggered
+        [ERR][err_count] converse test not pass                     // by catched nothing and output [ERR][err_count++]
+        // if service err and successfully triggered
+        MODC: xxx MESC: xxx service_err_which_class_how_err_and_why // by mes_out.code != 0 then mes_out.out()
+        // if service err and unsuccessfully triggered
+        [ERR][err_count] converse test not pass                     // by mes_out.code == 0 and output [ERR][err_count++]
+        
+        converse test [k++]:
+            test what
+        // if coding err and successfully triggered
+        MODC: xxx MESC: xxx coding_err_which_class_how_err_and_why  // by catched mes::a_mes mes_out then mes_out.out() then in CMD can see this output
+        [PASS]                                                      // by catched mes::a_mes mes_out then output [PASS]
+        // if coding err and unsuccessfully triggered
+        [ERR][err_count] converse test not pass                     // by catched nothing and output [ERR][err_count++]
+        // if service err and successfully triggered
+        MODC: xxx MESC: xxx service_err_which_class_how_err_and_why // by mes_out.code != 0 then mes_out.out()
+        // if service err and unsuccessfully triggered
+        [ERR][err_count] converse test not pass                     // by mes_out.code == 0 and output [ERR][err_count++]
+
+        converse test [k++]:
+            test what
+        // if coding err and successfully triggered
+        MODC: xxx MESC: xxx coding_err_which_class_how_err_and_why  // by catched mes::a_mes mes_out then mes_out.out() then in CMD can see this output
+        [PASS]                                                      // by catched mes::a_mes mes_out then output [PASS]
+        // if coding err and unsuccessfully triggered
+        [ERR][err_count] converse test not pass                     // by catched nothing and output [ERR][err_count++]
+        // if service err and successfully triggered
+        MODC: xxx MESC: xxx service_err_which_class_how_err_and_why // by mes_out.code != 0 then mes_out.out()
+        // if service err and unsuccessfully triggered
+        [ERR][err_count] converse test not pass                     // by mes_out.code == 0 and output [ERR][err_count++]
+        
+[i.j++] xxx_function test :
+[i.j++] original statement test :
+            test what // one sentence to explain what the test measures
+        [PASS]        // by mes_out.code == 0 and catched nothing then output [PASS]
+
+        converse test [k]:
+            test what
+        // if coding err and successfully triggered
+        MODC: xxx MESC: xxx coding_err_which_class_how_err_and_why  // by catched mes::a_mes mes_out then mes_out.out() then in CMD can see this output
+        [PASS]                                                      // by catched mes::a_mes mes_out then output [PASS]
+        // if coding err and unsuccessfully triggered
+        [ERR][err_count] converse test not pass                     // by catched nothing and output [ERR][err_count++]
+        // if service err and successfully triggered
+        MODC: xxx MESC: xxx service_err_which_class_how_err_and_why // by mes_out.code != 0 then mes_out.out()
+        // if service err and unsuccessfully triggered
+        [ERR][err_count] converse test not pass                     // by mes_out.code == 0 and output [ERR][err_count++]
+
+        converse test [k++]:
+            test what
+        // if coding err and successfully triggered
+        MODC: xxx MESC: xxx coding_err_which_class_how_err_and_why  // by catched mes::a_mes mes_out then mes_out.out() then in CMD can see this output
+        [PASS]                                                      // by catched mes::a_mes mes_out then output [PASS]
+        // if coding err and unsuccessfully triggered
+        [ERR][err_count] converse test not pass                     // by catched nothing and output [ERR][err_count++]
+        // if service err and successfully triggered
+        MODC: xxx MESC: xxx service_err_which_class_how_err_and_why // by mes_out.code != 0 then mes_out.out()
+        // if service err and unsuccessfully triggered
+        [ERR][err_count] converse test not pass                     // by mes_out.code == 0 and output [ERR][err_count++]
+
+        converse test [k++]:
+            test what
+        // if coding err and successfully triggered
+        MODC: xxx MESC: xxx coding_err_which_class_how_err_and_why  // by catched mes::a_mes mes_out then mes_out.out() then in CMD can see this output
+        [PASS]                                                      // by catched mes::a_mes mes_out then output [PASS]
+        // if coding err and unsuccessfully triggered
+        [ERR][err_count] converse test not pass                     // by catched nothing and output [ERR][err_count++]
+        // if service err and successfully triggered
+        MODC: xxx MESC: xxx service_err_which_class_how_err_and_why // by mes_out.code != 0 then mes_out.out()
+        // if service err and unsuccessfully triggered
+        [ERR][err_count] converse test not pass                     // by mes_out.code == 0 and output [ERR][err_count++]
+
+// next class
+j = 0
+
+[i++] class_name test : 
+[i.j] xxx_function test :
+[i.j] original statement test :
+            test what // one sentence to explain what the test measures
+        [PASS]        // by mes_out.code == 0 and catched nothing then output [PASS]
+        
+        converse test [k]:
+            test what
+        // if coding err and successfully triggered
+        MODC: xxx MESC: xxx coding_err_which_class_how_err_and_why  // by catched mes::a_mes mes_out then mes_out.out() then in CMD can see this output
+        [PASS]                                                      // by catched mes::a_mes mes_out then output [PASS]
+        // if coding err and unsuccessfully triggered
+        [ERR][err_count] converse test not pass                     // by catched nothing and output [ERR][err_count++]
+        // if service err and successfully triggered
+        MODC: xxx MESC: xxx service_err_which_class_how_err_and_why // by mes_out.code != 0 then mes_out.out()
+        // if service err and unsuccessfully triggered
+        [ERR][err_count] converse test not pass                     // by mes_out.code == 0 and output [ERR][err_count++]
+        
+        converse test [k++]:
+            test what
+        // if coding err and successfully triggered
+        MODC: xxx MESC: xxx coding_err_which_class_how_err_and_why  // by catched mes::a_mes mes_out then mes_out.out() then in CMD can see this output
+        [PASS]                                                      // by catched mes::a_mes mes_out then output [PASS]
+        // if coding err and unsuccessfully triggered
+        [ERR][err_count] converse test not pass                     // by catched nothing and output [ERR][err_count++]
+        // if service err and successfully triggered
+        MODC: xxx MESC: xxx service_err_which_class_how_err_and_why // by mes_out.code != 0 then mes_out.out()
+        // if service err and unsuccessfully triggered
+        [ERR][err_count] converse test not pass                     // by mes_out.code == 0 and output [ERR][err_count++]
+        
+        converse test [k++]:
+            test what
+        // if coding err and successfully triggered
+        MODC: xxx MESC: xxx coding_err_which_class_how_err_and_why  // by catched mes::a_mes mes_out then mes_out.out() then in CMD can see this output
+        [PASS]                                                      // by catched mes::a_mes mes_out then output [PASS]
+        // if coding err and unsuccessfully triggered
+        [ERR][err_count] converse test not pass                     // by catched nothing and output [ERR][err_count++]
+        // if service err and successfully triggered
+        MODC: xxx MESC: xxx service_err_which_class_how_err_and_why // by mes_out.code != 0 then mes_out.out()
+        // if service err and unsuccessfully triggered
+        [ERR][err_count] converse test not pass                     // by mes_out.code == 0 and output [ERR][err_count++]
+        
+[SUMMARY]
+[ALL TEST COUNT]xxx 
+[PASS TEST COUNT]xxx
+[ERR TEST COUNT]xxx
+============================== XXX MOD TEST END ==============================
+'''
+
+//================================ AI辅助自动测试 ================================
+
+上传文件：
+//1 测试框架
+TEST_helper.h
+TEST_helper.cpp
+//2 测试例子
+XXMOD.ixx
+XXMOD_xxxx_child_function.cpp
+XXMOD_xxxx_child_function_test.cpp
+//3 测试对象
+XXMOD_xxxxxx_child_function.cpp
+
+测试代码生成提示词:
+
+请你按照测试规则，根据静态卷的实现，测试每个公共函数的至少一个真命题（正常行为），
+并全面测试其否命题（抛出编码错误异常或者消息参数传出服务错误，服务错误的期望消息或
+异常要严格匹配，匹配失败测试框架会自动计数，编码错误不用严格匹配）。放在BMMS_static
+_volume_test.cpp中。同样的，不得使用匿名命名空间，使用专门的命名空间放辅助函数。

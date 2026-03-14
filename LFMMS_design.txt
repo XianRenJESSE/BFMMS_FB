@@ -1,0 +1,279 @@
+﻿//LFMMS_design.txt
+文件结构 
+[head                                ]
+[logical_block_stack_top_offset      ]
+[logical_block_stack_top_offset_flag ]
+[logical_block_stack                 ]
+[4K_alignment_fill                   ]
+[physical_blocks                     ]
+
+/*
+1.在日志段记录变更
+2.清空头0段，回读确保清空
+3.在内存上算出1份的头校验和，然后先写校验和扩大版（1byte当1bit），回读比对
+4.然后再逐个写头的字段（每个字段都有flag，且回读比对）
+5.整体回读比对
+6.记录变更结果，回读记录正确
+
+投票修复机制：
+如果单字节不为0x00或0xFF：
+若pair=0 则在单字节内投票，1多则使0变成1，0多则使1变成0，数量相等则报服务错误
+若pair!=0 则取所有头的数据按位计数投票，注意计数index的头的数据需要按位取反，多则使0变成1，
+0多则使1变成0，数量相等则报服务错误
+fix时顺带互相纠错，不只是修复第一个头
+flag是步骤性标记，fix写入字段时也要使用，所以flag不直接参与fix
+
+字段除name外均 8byte当 1byte用,且8字节对齐，抗位翻转，如下：
+data 0x01 on memory <==> data on bin_file 0x00000000000000FF
+
+
+栈区和逻辑块的pair_ECC规则如下：
+
+## 原始数据
+```
+0b00000001'00000010  (二进制)
+即：
+字节0: 00000001  (低位字节，对应原始数据的前8位)
+字节1: 00000010  (高位字节，对应原始数据的后8位)
+```
+
+## pair = 0（4bit扩展）
+小端序存储：
+```
+地址递增 → 
+[字节0] 0x0F 0x00 0x00 0x00    // 原始位0-3: 1 0 0 0
+[字节4] 0xF0 0x00 0x00 0x00    // 原始位4-7: 1 0 0 0
+[字节8] 0x00 0x0F 0x00 0x00    // 原始位8-11: 0 1 0 0
+[字节12] 0x00 0xF0 0x00 0x00   // 原始位12-15: 0 1 0 0
+```
+
+每个原始位占4bit，在内存中连续存放：
+- 原始位0 (1): 存储在字节0的低4位 → 0x0F
+- 原始位1 (0): 存储在字节0的高4位 → 0x00
+- 原始位2 (0): 存储在字节1的低4位 → 0x00
+- 原始位3 (0): 存储在字节1的高4位 → 0x00
+- 原始位4 (1): 存储在字节2的低4位 → 0x0F
+- 原始位5 (0): 存储在字节2的高4位 → 0x00
+- 原始位6 (0): 存储在字节3的低4位 → 0x00
+- 原始位7 (0): 存储在字节3的高4位 → 0x00
+- 原始位8 (0): 存储在字节4的低4位 → 0x00
+- 原始位9 (1): 存储在字节4的高4位 → 0x0F
+- ...
+
+## pair = 1（8字节扩展）
+小端序存储：
+```
+地址递增 → 
+[字节0] 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF  // 原始位0=1
+[字节8] 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00  // 原始位1=0
+[字节16] 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 // 原始位2=0
+... (中间全是0) ...
+[字节64] 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF // 原始位8=1
+[字节72] 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 // 原始位9=0
+[字节80] 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 // 原始位10=0
+```
+
+每个原始位占连续的8个字节（全部0x00或全部0xFF），按位顺序连续存放。
+
+## pair = 2（16字节扩展）
+小端序存储：
+```
+地址递增 → 
+[字节0]   0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF  // 原始位0=1
+[字节16]  0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00  // 原始位1=0
+[字节32]  0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00  // 原始位2=0
+...
+[字节128] 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF 0xFF  // 原始位8=1
+[字节144] 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00  // 原始位9=0
+[字节160] 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00  // 原始位10=0
+```
+
+每个原始位占连续的16个字节（8*pair=16），按位顺序连续存放。
+
+## 总结
+
+在小端序下：
+1. **地址递增方向**：从低地址到高地址
+2. **原始位顺序**：原始位0在最低地址，原始位1在次低地址，以此类推
+3. **扩展方式**：
+   - pair=0: 每个原始位占4bit，连续存放
+   - pair>0: 每个原始位占 `8*pair` 字节，连续存放
+*/
+head:
+
+char[64] name    = L F M M S _ V A L U M E ...              [0,64)
+byte_8   flag_1  = FF FF FF FF FF FF FF FF                  [64,72)
+
+byte_1[64] head_check_sum_value = XX ................. XX   [72,136)
+byte_8     flag_2               = FF FF FF FF FF FF FF FF   [136,144)
+
+byte_1[64] version = [FF] ................ 00               [144,208)
+byte_8     flag_3  =  FF FF FF FF FF FF FF FF               [208,216)
+
+byte_8   init_type = [00]00 00 00 00 00 00 00               [216,224)
+                      -> no_init_all_size:[00]00 00 00 00 00 00 00 
+                      -> init_all_size:   [FF]00 00 00 00 00 00 00
+byte_8   flag_4    = FF FF FF FF FF FF FF FF                [224,232)
+
+byte_8   use_control =[00]00 00 00 00 00 00 00              [232,240)   
+                       -> not_allow_over_use:00
+                       -> allow_over_use:FF
+byte_8   flag_5      = FF FF FF FF FF FF FF FF              [240,248)
+
+byte_1[64] physical_block_size = [00 ... 00]                [248,312)
+byte_8     flag_6 = FF FF FF FF FF FF FF FF                 [312,320)
+
+byte_1[64] logical_block_size = [00 ................ 00]    [320,384)
+byte_8     flag_7 = FF FF FF FF FF FF FF FF                 [384,392)
+
+byte_8   logical_block_alignment_type   =[00 00 00]00 00 00 00 00   [392,400)
+                    without_alignment   =[00 00 00]00 00 00 00 00 ,
+                    byte_4_each_block   =[FF 00 00]00 00 00 00 00 ,
+                    byte_8_each_block   =[00 FF 00]00 00 00 00 00 ,
+                    byte_16_each_block  =[FF FF 00]00 00 00 00 00 ,
+                    byte_32_each_block  =[00 00 FF]00 00 00 00 00 ,
+                    byte_64_each_block  =[FF 00 FF]00 00 00 00 00 ,
+                    byte_128_each_block =[00 FF FF]00 00 00 00 00 ,
+byte_8   flag_8 = FF FF FF FF FF FF FF FF                   [400,408)
+
+byte_8   logical_block_alignment_control =  [00]00 00 00 00 00 00 00  [408,416)
+                                             ->not_over_physical_block: [00]
+                                             ->over_physical_block:    [FF]
+byte_8   flag_9 = FF FF FF FF FF FF FF FF                   [416,424)  
+
+byte_1[64] logical_block_count_max = [00 ................ 00]  [424,488)
+byte_8     flag_10 = FF FF FF FF FF FF FF FF                   [488,496)
+
+byte_8   cache_control =[00]00 00 00 00 00 00 00               [496,504)
+                         ->static_size: [00]00 00 00 00 00 00 00 
+                         ->dynamic_size:[FF]00 00 00 00 00 00 00 
+byte_8   flag_11 = FF FF FF FF FF FF FF FF                     [504,512)
+
+byte_8   memory_cache_control =  [00 00]00 00 00 00 00 00      [512,520)
+                                  ->no_cache:  [00 00]
+                                  ->cache_all: [FF 00]
+                                  ->cache_part:[00 FF]
+byte_8   flag_12 = FF FF FF FF FF FF FF FF                     [520,528)
+
+byte_8   stack_accelerate = [00]00 00 00 00 00 00 00           [528,536)
+                                    ->accelerate:    [00]
+                                    ->not_accelerate:[FF]
+byte_8   flag_13 = FF FF FF FF FF FF FF FF                     [536,544)
+
+byte_8   pair    = [00 00 00 00 00 00 00 00]                   [544,552) 
+byte_8   flag_14 =  FF FF FF FF FF FF FF FF                    [552,560)
+
+byte_8   permission = [00 00 00]00 00 00 00 00                 [560,568) 
+               ->___ : 00 00 00
+               ->__x : FF 00 00
+               ->_w_ : 00 FF 00
+               ->_wx : FF FF 00
+               ->r__ : 00 00 FF
+               ->r_x : FF 00 FF
+               ->rw_ : 00 FF FF
+               ->rwx : FF FF FF
+byte_8   flag_15 = FF FF FF FF FF FF FF FF                     [568,576)
+
+char[64] password_encryption_result                            [576,640)
+byte_8   flag_16 = FF FF FF FF FF FF FF FF                     [640,648)
+
+byte_1[64] created_time = [00 ................ 00]             [648,712)
+byte_8   flag_17 = FF FF FF FF FF FF FF FF                     [712,720)
+
+byte_1[64] last_change_time = [00 ................ 00]         [720,784)
+byte_8   flag_18 = FF FF FF FF FF FF FF FF                     [784,792)
+
+// 预留：[792,4096)
+
+head_end = 4K + 4K*(2*pair-1)
+
+byte_1[32 + 32 * (2 * pair - 1)] logical_block_stack_top_offset_0
+    [head_end,head_end + 32 + 32 * (2 * pair - 1))
+byte_1[32 + 32 * (2 * pair - 1)] logical_block_stack_top_offset_1
+    [head_end + 32 + 32 * (2 * pair - 1),head_end + 2 * (32 + 32 * (2 * pair - 1))
+byte_8 flag [00]00 00 00 00 00 00 00 //if 0x00 then using logical_block_stack_top_offset_0 if 0xFF using logical_block_stack_top_offset_1
+    [head_end + 2 * (32 + 32 * (2 * pair - 1),head_end + 2 * (32 + 32 * (2 * pair - 1) + 8)
+#if logical_block_alignment_control == not_over_physical_block // logical_block_size > physical_block_size -> __CODING_ERR__
+a_stack_group:
+    struct a_stack_info:
+        byte_1[32 + 32 * (2 * pair - 1)] handle_version
+        byte_1[4 + 4 * (2 * pair - 1)]   can_pop
+        byte_1[28 + 28 * (2 * pair - 1)] logical_block_index
+
+    byte_1      [32 + 32 * (2 * pair - 1)]                 physical_block_offset
+    a_stack_info[physical_block_size / logical_block_size] logical_block_group
+比如：
+4个块初始化后的栈：
+0x0000000000FFAA00                 <- physical_block_offset 0 //我随便写的值
+0x0000000000000001'0100000000000000<-栈指针
+0x0000000000000001'0100000000000001
+0x0000000000FFAAFF                 <- physical_block_offset 1 //我随便写的值
+0x0000000000000001'0100000000000002
+0x0000000000000001'0100000000000003
+
+依次分配3个块a,b,c后的栈
+0x0000000000FFAA00                 <- physical_block_offset 0 //我随便写的值
+0x0000000000000002'0000000000000000
+0x0000000000000002'0000000000000000
+0x0000000000FFAAFF                 <- physical_block_offset 1 //我随便写的值
+0x0000000000000002'0000000000000000
+0x0000000000000001'0100000000000003<-栈指针
+
+释放了b后的栈：
+0x0000000000FFAA00                 <- physical_block_offset 0 //我随便写的值
+0x0000000000000002'0000000000000000
+0x0000000000000002'0100000000000000<-b的标记恒在这里的最高字节
+0x0000000000FFAAFF                 <- physical_block_offset 1 //我随便写的值
+0x0000000000000002'0000000000000001<-栈指针，b的index被写入了这里的低7字节
+0x0000000000000001'0100000000000003
+
+#else
+a_stack_range:
+    byte_1[32 + 32 * (2 * pair - 1)] logical_block_offset
+    byte_1[32 + 32 * (2 * pair - 1)] handle_version
+    byte_1[4 + 4 * (2 * pair - 1)]   can_pop
+    byte_1[28 + 28 * (2 * pair - 1)] logical_block_index
+比如：
+字段解析：
+logical_block_offset 8byte
+version               8byte
+can_pop               1byte
+index                 7byte
+
+4个块初始化后的栈：
+0x0000000000FF0000                 <- logical_block_offset 0 //我随便写的值
+0x0000000000000001'0100000000000000<-栈指针
+0x0000000000FF000F                 <- logical_block_offset 0 //我随便写的值
+0x0000000000000001'0100000000000001
+0x0000000000FF00F0                 <- logical_block_offset 1 //我随便写的值
+0x0000000000000001'0100000000000002
+0x0000000000FF00FF                 <- logical_block_offset 1 //我随便写的值
+0x0000000000000001'0100000000000003
+
+依次分配3个块a,b,c后的栈
+0x0000000000FF0000                 <- logical_block_offset 0 //我随便写的值
+0x0000000000000002'0100000000000000
+0x0000000000FF000F                 <- logical_block_offset 0 //我随便写的值
+0x0000000000000002'0100000000000000
+0x0000000000FF00F0                 <- logical_block_offset 1 //我随便写的值
+0x0000000000000002'0100000000000000
+0x0000000000FF00FF                 <- logical_block_offset 1 //我随便写的值
+0x0000000000000001'0100000000000003<-栈指针
+
+释放了b后的栈：
+0x0000000000FF0000                 <- logical_block_offset 0 //我随便写的值
+0x0000000000000002'0000000000000000
+0x0000000000FF000F                 <- logical_block_offset 0 //我随便写的值
+0x0000000000000002'[01]00000000000000<-b的标记恒在这里的最高字节,压入时标记为0x01,弹出时标记为0x00,
+                                        每个栈字段的这个位置相当于位图，和bin_file全局索引是双射的
+0x0000000000FF00F0                 <- logical_block_offset 1 //我随便写的值
+0x0000000000000002'00[00000000000001]<-栈指针，b的index被写入了这里的低7字节
+0x0000000000FF00FF                 <- logical_block_offset 1 //我随便写的值
+0x0000000000000001'0100000000000003
+#endif
+
+
+
+//physical_blocks区也使用同stack区的连续式pair_ECC,内存上的逻辑块大小，
+//所以 actually_logical_block_size = logical_block_size * 4 
+//                                 或 logical_block_size * 8 * pair

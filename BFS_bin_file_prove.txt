@@ -1,0 +1,157 @@
+﻿//file_prove.txt
+一、符号定义
+text
+定义文件 F 为一个有序字节序列，记作：
+F = [0, S)  // S 为文件大小
+
+定义操作：
+- 读操作 R(F, B, E) = 从文件 F 的 [B, E) 区间读取数据
+- 写操作 W(F, B, E) = 向文件 F 的 [B, E) 区间写入数据
+
+定义函数：
+|F| = S  // 文件大小
+is_open(F) = 文件已打开且有效
+path(F) = 文件路径
+same_file(F1, F2) = path(F1) == path(F2)
+二、文件到文件操作的安全性定理（load/store）
+2.1 前提条件
+text
+定义：
+F1: 源文件，大小 S1，操作区间 O1 = [B1, E1)，|O1| = L
+F2: 目标文件，大小 S2，操作区间 O2 = [B2, E2)，|O2| = L
+约束：L > 0
+2.2 安全条件定理
+定理1（基础有效性）：
+
+text
+safe_file_op(F1, F2, B1, L, B2) ⇔ 
+   is_open(F1) ∧ is_open(F2) ∧          // 文件必须打开
+   0 ≤ B1 ∧ B1 + L ≤ S1 ∧               // O1 ⊆ [0, S1)
+   0 ≤ B2 ∧ B2 + L ≤ S2 ∧               // O2 ⊆ [0, S2)
+   L > 0                                // 操作大小为正
+定理2（同文件操作不重叠）：
+
+text
+当 same_file(F1, F2) 时，还需满足：
+   O1 ∩ O2 = ∅  ⇔  E1 ≤ B2 ∨ E2 ≤ B1
+证明：同一个文件内操作，如果区间重叠可能导致数据损坏。这与 agent_ptr 中的"原地操作数据检查"类似。
+
+定理3（文件边界溢出检查）：
+
+text
+no_overflow_file(F, B, L) ⇔ B ≤ S1 - L
+这确保文件操作不会越界。
+
+三、文件与代理指针交互的安全性定理
+3.1 定义
+text
+F: 文件，大小 S
+A: 代理指针，管理内存区间 M = [ptr, ptr + size_A)
+操作：
+   load: F → A，从文件读取到内存
+   store: A → F，从内存写入文件
+3.2 安全条件定理
+定理4（文件到代理指针）：
+
+text
+safe_load_to_agent_ptr(F, Bf, L, A, Ba) ⇔
+   is_open(F) ∧
+   ¬is_null(A) ∧                    // 代理指针非空
+   0 ≤ Bf ∧ Bf + L ≤ S ∧            // 文件操作区间有效
+   0 ≤ Ba ∧ Ba + L ≤ size_A ∧       // 内存操作区间有效
+   L > 0
+证明：文件与内存是不同存储介质，不涉及内存重叠问题，只需各自区间有效。
+
+定理5（代理指针到文件）：
+
+text
+safe_store_from_agent_ptr(F, Bf, L, A, Ba) ⇔
+   is_open(F) ∧
+   ¬is_null(A) ∧
+   0 ≤ Bf ∧ Bf + L ≤ S ∧
+   0 ≤ Ba ∧ Ba + L ≤ size_A ∧
+   L > 0
+四、文件与 void* 指针交互的安全性定理
+4.1 定义
+text
+F: 文件，大小 S
+V: void* 指针，假设有足够空间容纳 L 字节
+4.2 安全条件定理
+定理6（文件到 void*）：
+
+text
+safe_load_to_void_ptr(F, Bf, L, V) ⇔
+   is_open(F) ∧
+   V ≠ nullptr ∧                    // void* 非空
+   0 ≤ Bf ∧ Bf + L ≤ S ∧            // 文件操作区间有效
+   L > 0
+*定理7（void 到文件）**：
+
+text
+safe_store_from_void_ptr(F, Bf, L, V) ⇔
+   is_open(F) ∧
+   V ≠ nullptr ∧
+   0 ≤ Bf ∧ Bf + L ≤ S ∧
+   L > 0
+五、操作重叠的形式化推理
+5.1 同一文件内的 load/store 操作
+对于 load 函数（当前文件作为源）：
+
+text
+设当前文件 F，目标文件 F'
+操作：
+   O_self = [B1, B1+L) ⊆ F
+   O_other = [B2, B2+L) ⊆ F'
+推理1：
+
+text
+当 same_file(F, F') 时，必须满足：
+   O_self ∩ O_other = ∅
+   
+证明必要性：
+   如果 O_self ∩ O_other ≠ ∅，则读写区域重叠，可能导致：
+   1. 读操作看到部分写入的数据（如果实现使用临时缓冲区）
+   2. 写操作可能覆盖正在读取的数据
+   这违反了操作的原子性和一致性。
+推理2：
+
+text
+当 ¬same_file(F, F') 时，不需要检查重叠：
+   不同文件使用不同的存储介质，操作完全独立。
+
+六、完整安全证明流程
+6.1 load 函数安全证明
+text
+load(F_self, B1, L, F_other, B2) 的安全性证明：
+
+前提：
+1. is_open(F_self) ∧ is_open(F_other)               // 文件已打开
+2. 0 ≤ B1 ∧ B1 + L ≤ |F_self|                       // 源操作区间有效
+3. 0 ≤ B2 ∧ B2 + L ≤ |F_other|                     // 目标操作区间有效
+4. L > 0                                            // 操作大小为正
+5. if same_file(F_self, F_other) then 
+     [B1, B1+L) ∩ [B2, B2+L) = ∅                    // 同文件不重叠
+
+推导：
+由前提2,3 → 操作不会越界访问
+由前提5 → 不会发生数据损坏（当同文件时）
+由前提4 → 操作有意义
+
+结论：load 操作是安全的。
+6.2 与 agent_ptr 交互的安全证明
+text
+load_to_agent_ptr(F, Bf, L, A, Ba) 的安全性证明：
+
+前提：
+1. is_open(F)                                      // 文件已打开
+2. ¬is_null(A)                                     // 代理指针有效
+3. 0 ≤ Bf ∧ Bf + L ≤ |F|                          // 文件区间有效
+4. 0 ≤ Ba ∧ Ba + L ≤ size_A                       // 内存区间有效
+5. L > 0                                          // 操作大小为正
+
+推导：
+- 文件操作与内存操作是分离的
+- 通过系统调用（read/write）保证数据传输的原子性
+- 代理指针负责内存安全，文件对象负责文件安全
+
+结论：操作是安全的。

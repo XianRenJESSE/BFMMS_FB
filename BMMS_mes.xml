@@ -1,0 +1,318 @@
+﻿<mes>
+	<info>
+		mode_name = BMMS
+		mode_macro = MOD_CODE_BMMS
+		namespace = bmms_m
+	</info>
+	<sug>
+		null
+	</sug>
+	<war>
+		null
+	</war>
+	<err>
+		<!-- ============================ 静态卷错误 ============================ -->
+		static_volume_err_begin
+
+		<!-- ====================== 构造参数错误 ===================== -->
+		static_volume_construction_errors_begin
+		coding_err_static_volume_alignment_type_invalid
+		coding_err_static_volume_init_type_invalid
+		coding_err_static_volume_block_size_invalid
+		coding_err_static_volume_block_count_invalid
+		static_volume_construction_errors_end
+
+		<!-- ====================== 内存分配失败 ===================== -->
+		static_volume_allocation_errors_begin
+		service_err_static_volume_memory_alloc_failed
+		static_volume_allocation_errors_end
+
+		<!-- ====================== 算术溢出错误 ====================== -->
+		static_volume_arithmetic_overflow_errors_begin
+		coding_err_static_volume_add_overflow
+		coding_err_static_volume_sub_overflow
+		coding_err_static_volume_mul_overflow
+		coding_err_static_volume_div_by_zero
+		coding_err_static_volume_mod_by_zero
+		static_volume_arithmetic_overflow_errors_end
+
+		<!-- ====================== 回收栈错误 ===================== -->
+		static_volume_stack_errors_begin
+		coding_err_static_volume_recycle_stack_full
+		coding_err_static_volume_block_index_invalid
+		service_err_static_volume_recycle_stack_empty
+		static_volume_stack_errors_end
+
+		<!-- ====================== 块删除/重用错误 ====================== -->
+		static_volume_deletion_errors_begin
+		coding_err_static_volume_invalid_delete
+		coding_err_static_volume_block_already_deleted
+		static_volume_deletion_errors_end
+
+		<!-- ====================== 使用前未初始化 ===================== -->
+		static_volume_initialization_errors_begin
+		coding_err_static_volume_not_inited
+		static_volume_initialization_errors_end
+		
+		static_volume_err_end
+
+
+		<!-- ============================ 静态卷指针错误 ============================ -->
+		static_volume_ptr_err_begin
+
+		<!-- ====================== 构造错误 ===================== -->
+		static_volume_ptr_construction_errors_begin
+		coding_err_static_volume_ptr_ctor_nullptr
+		coding_err_static_volume_ptr_ctor_not_inited
+		static_volume_ptr_construction_errors_end
+
+		<!-- ====================== 使用前未初始化 ===================== -->
+		static_volume_ptr_initialization_errors_begin
+		coding_err_static_volume_ptr_not_inited
+		static_volume_ptr_initialization_errors_end
+
+		<!-- ====================== 块分配失败 ===================== -->
+		static_volume_ptr_allocation_errors_begin
+		service_err_static_volume_ptr_new_block_failed
+		static_volume_ptr_allocation_errors_end
+
+		static_volume_ptr_err_end
+
+
+		<!-- ============================ 静态卷分区错误 ============================ -->
+		static_volume_part_err_begin
+
+		<!-- ====================== 构造参数错误 ===================== -->
+		static_volume_part_construction_errors_begin
+		coding_err_static_volume_part_build_from_null_ptr
+		coding_err_static_volume_part_build_volume_not_inited
+		coding_err_static_volume_part_build_init_type_invalid
+		coding_err_static_volume_part_build_control_type_invalid
+		coding_err_static_volume_part_build_block_count_zero
+		coding_err_static_volume_part_build_block_count_over_index_max
+		coding_err_static_volume_part_build_init_and_control_invalid
+		service_err_static_volume_part_build_static_volume_free_block_not_enough
+		static_volume_part_construction_errors_end
+
+		<!-- ====================== 构造时资源不足 ===================== -->
+		static_volume_part_construction_resource_errors_begin
+		service_err_static_volume_part_memory_alloc_failed
+		service_err_static_volume_part_build_not_enough_free_blocks
+		static_volume_part_construction_resource_errors_end
+
+		<!-- ====================== 使用前未初始化 ===================== -->
+		static_volume_part_initialization_errors_begin
+		coding_err_static_volume_part_not_inited
+		static_volume_part_initialization_errors_end
+
+		<!-- ====================== 范围/索引校验错误 ====================== -->
+		static_volume_part_validation_errors_begin
+		coding_err_static_volume_part_range_zero
+		coding_err_static_volume_part_range_out_of_range
+		coding_err_static_volume_part_block_index_out_of_range
+		static_volume_part_validation_errors_end
+
+		<!-- ====================== 调整大小错误（编码/逻辑混合） ===================== -->
+		static_volume_part_resize_errors_begin
+		coding_err_static_volume_part_resize_block_count_zero
+		service_err_static_volume_part_resize_over_volume_limit
+		service_err_static_volume_part_resize_memory_alloc_failed
+		service_err_static_volume_part_resize_not_enough_blocks
+		static_volume_part_resize_errors_end
+
+		<!-- ====================== 数据存储错误 ===================== -->
+		static_volume_part_store_errors_begin
+		service_err_static_volume_part_store_not_enough_space
+		static_volume_part_store_errors_end
+
+		<!-- ====================== 算术溢出错误 ====================== -->
+		static_volume_part_arithmetic_overflow_errors_begin
+		coding_err_static_volume_part_add_overflow
+		coding_err_static_volume_part_sub_overflow
+		coding_err_static_volume_part_mul_overflow
+		coding_err_static_volume_part_div_by_zero
+		coding_err_static_volume_part_mod_by_zero
+		static_volume_part_arithmetic_overflow_errors_end
+
+		static_volume_part_err_end
+	
+		<!-- ============================ 自由卷错误 ============================ -->
+		free_volume_err_begin
+
+		<!-- ====================== 构造参数错误 ===================== -->
+		free_volume_construction_errors_begin
+		coding_err_free_volume_init_type_invalid
+		coding_err_free_volume_alignment_type_invalid
+		coding_err_free_volume_block_size_zero
+		coding_err_free_volume_block_size_invalid
+		coding_err_free_volume_block_count_zero
+		coding_err_free_volume_block_count_invalid
+		coding_err_free_volume_block_count_exceed_index_max
+		coding_err_free_volume_alignment_not_power_of_two
+		coding_err_free_volume_actually_block_size_zero
+		coding_err_free_volume_recycle_stack_size_zero
+		free_volume_construction_errors_end
+
+		<!-- ====================== 内存分配失败 ===================== -->
+		free_volume_allocation_errors_begin
+		service_err_free_volume_memory_alloc_failed
+		service_err_free_volume_init_block_failed
+		free_volume_allocation_errors_end
+
+		<!-- ====================== 算术溢出错误 ====================== -->
+		free_volume_arithmetic_overflow_errors_begin
+		coding_err_free_volume_add_overflow
+		coding_err_free_volume_sub_overflow
+		coding_err_free_volume_mul_overflow
+		coding_err_free_volume_div_by_zero
+		coding_err_free_volume_mod_by_zero
+		free_volume_arithmetic_overflow_errors_end
+
+		<!-- ====================== 回收栈错误 ===================== -->
+		free_volume_stack_errors_begin
+		coding_err_free_volume_recycle_stack_full
+		coding_err_free_volume_block_index_invalid
+		service_err_free_volume_recycle_stack_empty
+		free_volume_stack_errors_end
+
+		<!-- ====================== 块删除/重用错误 ====================== -->
+		free_volume_deletion_errors_begin
+		coding_err_free_volume_pass_in_a_invalid_block_that_not_belong_to_self
+		coding_err_free_volume_block_already_deleted
+		coding_err_free_volume_free_again
+		coding_err_free_volume_block_in_use
+		free_volume_deletion_errors_end
+
+		<!-- ====================== 初始化块错误 ====================== -->
+		free_volume_init_block_errors_begin
+		coding_err_free_volume_init_block_again
+		coding_err_free_volume_block_index_invalid_when_init_a_block
+		free_volume_init_block_errors_end
+
+		<!-- ====================== 范围操作错误 ====================== -->
+		free_volume_range_errors_begin
+		coding_err_free_volume_range_invalid
+		free_volume_range_errors_end
+
+		<!-- ====================== 使用前未初始化 ===================== -->
+		free_volume_initialization_errors_begin
+		coding_err_free_volume_not_inited
+		free_volume_initialization_errors_end
+
+		free_volume_err_end
+
+		<!-- ============================ 自由卷指针错误 ============================ -->
+		free_volume_ptr_err_begin
+
+		<!-- ====================== 构造错误 ===================== -->
+		free_volume_ptr_construction_errors_begin
+		coding_err_free_volume_ptr_ctor_nullptr
+		coding_err_free_volume_ptr_ctor_not_inited
+		free_volume_ptr_construction_errors_end
+
+		<!-- ====================== 使用前未初始化 ===================== -->
+		coding_err_free_volume_ptr_not_inited
+
+		<!-- ====================== 块分配失败 ===================== -->
+		service_err_free_volume_ptr_new_block_failed
+
+		free_volume_ptr_err_end
+
+	<!-- ============================ 自由分区错误 ============================ -->
+		free_part_err_begin
+
+		<!-- ====================== 构造参数错误 ===================== -->
+		free_part_construction_errors_begin
+		coding_err_free_part_build_block_size_zero
+		coding_err_free_part_build_block_count_zero
+		coding_err_free_part_build_block_count_over_index_max
+		coding_err_free_part_build_init_type_invalid
+		free_part_construction_errors_end
+
+		<!-- ====================== 使用前未初始化 ===================== -->
+		free_part_initialization_errors_begin
+		coding_err_free_part_not_inited
+		free_part_initialization_errors_end
+
+		<!-- ====================== 索引/范围校验错误 ====================== -->
+		free_part_validation_errors_begin
+		coding_err_free_part_block_index_out_of_range
+		coding_err_free_part_range_zero
+		coding_err_free_part_range_out_of_range
+		free_part_validation_errors_end
+
+		<!-- ====================== 内存分配错误 ===================== -->
+		free_part_allocation_errors_begin
+		service_err_free_part_memory_alloc_failed
+		service_err_free_part_resize_memory_alloc_failed
+		service_err_free_part_resize_block_count_zero
+		free_part_allocation_errors_end
+
+		<!-- ====================== 算术溢出错误 ====================== -->
+		free_part_arithmetic_overflow_errors_begin
+		coding_err_free_part_add_overflow
+		coding_err_free_part_sub_overflow
+		coding_err_free_part_mul_overflow
+		coding_err_free_part_div_by_zero
+		coding_err_free_part_mod_by_zero
+		free_part_arithmetic_overflow_errors_end
+
+		free_part_err_end
+
+
+		<!-- ============================ 代理指针错误 ============================ -->
+		agent_ptr_err_begin
+
+		<!-- ====================== 构造错误 ===================== -->
+		agent_ptr_construction_errors_begin
+		coding_err_agent_ptr_ctor_null_ptr
+		coding_err_agent_ptr_ctor_zero_size
+		coding_err_agent_ptr_ctor_overflow
+		agent_ptr_construction_errors_end
+
+		<!-- ====================== 空指针错误 ===================== -->
+		agent_ptr_null_errors_begin
+		coding_err_agent_ptr_self_null
+		coding_err_agent_ptr_other_null
+		coding_err_agent_ptr_void_ptr_null
+		agent_ptr_null_errors_end
+
+		<!-- ====================== 操作大小为零错误 ====================== -->
+		agent_ptr_size_zero_errors_begin
+		coding_err_agent_ptr_self_op_zero
+		coding_err_agent_ptr_other_op_zero
+		agent_ptr_size_zero_errors_end
+
+		<!-- ====================== 管理区间重叠错误 ====================== -->
+		agent_ptr_managed_range_overlap_errors_begin
+		coding_err_agent_ptr_managed_ranges_overlap
+		coding_err_agent_ptr_managed_range_overlaps_void_range
+		agent_ptr_managed_range_overlap_errors_end
+
+		<!-- ====================== 操作区间越界错误 ====================== -->
+		agent_ptr_range_boundary_errors_begin
+		coding_err_agent_ptr_self_op_out_of_range
+		coding_err_agent_ptr_other_op_out_of_range
+		agent_ptr_range_boundary_errors_end
+
+		<!-- ====================== 源目地址相同/重叠错误 ====================== -->
+		agent_ptr_overlap_errors_begin
+		coding_err_agent_ptr_src_dst_identical
+		coding_err_agent_ptr_op_ranges_overlap
+		agent_ptr_overlap_errors_end
+
+		<!-- ====================== 算术溢出错误 ====================== -->
+		agent_ptr_arithmetic_overflow_errors_begin
+		coding_err_agent_ptr_self_end_overflow
+		coding_err_agent_ptr_op_begin_overflow
+		coding_err_agent_ptr_op_end_overflow
+		agent_ptr_arithmetic_overflow_errors_end
+
+		<!-- ====================== 目标空间不足错误 ===================== -->
+		agent_ptr_capacity_errors_begin
+		coding_err_agent_ptr_managed_range_too_small
+		agent_ptr_capacity_errors_end
+
+		agent_ptr_err_end
+	</err>
+</mes>

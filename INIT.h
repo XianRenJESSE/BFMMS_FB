@@ -1,0 +1,27 @@
+﻿//INIT.h
+
+// MODE_CODE_INIT
+#define MOD_CODE_MES            1
+#define MOD_CODE_BFS            2
+#define MOD_CODE_BMMS           3
+#define MOD_CODE_LFMMS          4
+
+
+// MES
+#define DEBUG_MODE
+#define SHOW_STATIC_STR_MESSAGE  //存储静态字符串消息
+#define SHOW_DYNAMIC_STR_MESSAGE //存储动态字符串消息
+#define SHOW_CALL_CHAIN_MESSAGE  //显示调用链信息
+
+//BFS
+#define BFS_INCLUDE_TEST
+
+//BMMS
+#define BMMS_INCLUDE_TEST
+#define STATIC_VOLUME_MAX_BLOCK_SIZE  1024*1024
+#define STATIC_VOLUME_MAX_BLOCK_COUNT 1024*1024*1024
+#define FREE_VOLUME_MAX_BLOCK_SIZE    1024*1024
+#define FREE_VOLUME_MAX_BLOCK_COUNT   1024*1024*1024
+
+//LFMS
+#define LFMMS_INCLUDE_TEST
